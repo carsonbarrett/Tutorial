@@ -24,12 +24,12 @@ class FruitResponse(Fruit):
     creation_date: datetime
 
 # Get all available fruits
-@app.get("/api/fruits", response_model=List[FruitResponse])
+@app.get("/fruits", response_model=List[FruitResponse])
 def get_fruits():
     return [fruit for fruit in fruit_inventory if fruit["available"]]
 
 # Get a single fruit by ID
-@app.get("/api/fruits/{fruit_id}", response_model=FruitResponse)
+@app.get("/fruits/{fruit_id}", response_model=FruitResponse)
 def get_fruit(fruit_id: str):
     fruit = next((fruit for fruit in fruit_inventory if fruit["id"] == fruit_id), None)
     if not fruit:
@@ -37,7 +37,7 @@ def get_fruit(fruit_id: str):
     return fruit
 
 # Add a new fruit
-@app.post("/api/fruits", response_model=FruitResponse, status_code=201)
+@app.post("/fruits", response_model=FruitResponse, status_code=201)
 def create_fruit(fruit: Fruit):
     fruit_data = fruit.dict()
     fruit_data["id"] = str(uuid4())
@@ -46,7 +46,7 @@ def create_fruit(fruit: Fruit):
     return fruit_data
 
 # Update fruit (availability, price, quantity)
-@app.patch("/api/fruits/{fruit_id}", response_model=FruitResponse)
+@app.patch("/fruits/{fruit_id}", response_model=FruitResponse)
 def update_fruit(fruit_id: str, available: Optional[bool] = None, price: Optional[float] = None, quantity: Optional[int] = None):
     fruit = next((fruit for fruit in fruit_inventory if fruit["id"] == fruit_id), None)
     if not fruit:
@@ -62,7 +62,7 @@ def update_fruit(fruit_id: str, available: Optional[bool] = None, price: Optiona
     return fruit
 
 # Soft delete fruit (set availability to False)
-@app.delete("/api/fruits/{fruit_id}")
+@app.delete("/fruits/{fruit_id}")
 def delete_fruit(fruit_id: str):
     fruit = next((fruit for fruit in fruit_inventory if fruit["id"] == fruit_id), None)
     if not fruit:
