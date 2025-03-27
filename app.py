@@ -71,6 +71,7 @@ def delete_fruit(fruit_id: str):
     fruit["available"] = False
     return {"message": "Fruit removed from inventory"}
 
+
 # Root endpoint
 @app.get("/")
 def home():
