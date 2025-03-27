@@ -77,4 +77,3 @@ def delete_fruit(fruit_id: str):
 def home():
     return {"message": "Welcome to the Fresh Fruit Inventory System"}
 
-
